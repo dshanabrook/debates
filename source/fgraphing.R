@@ -1,5 +1,5 @@
-cutoffWordFr <- 21
-outlierLimit <- 19
+cutoffWordFr <- 18
+outlierLimit <- 25
 {
 	#cutoffWordFr <- 10
 	names(corpus.df) <- c("rightText", "leftText")
@@ -64,10 +64,11 @@ outlierLimit <- 19
 	label = row.names(leftTextdf), size = leftText, color = freq.dif)) + 
 	geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, 
 	label = row.names(equaldf), size = rightText, color = freq.dif))+ 
-	scale_size(range = c(2, 12), name = "frequency") + 
+	scale_size(range = c(1, 12), name = "frequency") + 
 	#scale_colour_gradient(low="darkred", high="darkblue", guide="none") +
 	scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), 
-	labels = c(labelNeg, labelEqu, labelPos)) + scale_y_continuous(breaks = c(0), 
+	labels = c(labelNeg, labelEqu, labelPos)) + 
+	scale_y_continuous(breaks = c(0), 
 	labels = c(" ")) + xlab(" ") + ylab(" ") + labs(title = labTitle) + 
 	xlab(" ") + ylab(" ")
 
