@@ -56,5 +56,5 @@ democraticSpeakers <- c("CLINTON:","SANDERS:","DICKERSON:", "O'MALLEY:","WEBB:")
 democrat <- getSpeaker(democraticSpeakers,debate)
 republicanSpeakers <- c( "BUSH:", "CARSON:", "CHAFEE:", "CHRISTIE:", "COOPER:", "CRUZ:", "FIORINA:", "HUCKABEE:", "KASICH:",  "PAUL:", "PERRY:", "RUBIO:", "TRUMP:", "WALKER:")
 republican <- getSpeaker(republicanSpeakers, debate)
-
-
+write(democrat, file="data/democrat")
+write(republican, file="data/republican")
