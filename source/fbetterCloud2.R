@@ -34,7 +34,6 @@ corpus <- Corpus(vs)
 	corpus <- tm_map(corpus, function(x) removeWords(x, stopwords("english")))
 	corpus <- tm_map(corpus, function(x) removeWords(x, "applause"))
 	corpus <- tm_map(corpus, removePunctuation)
-	corpus <- tm_map(corpus, removeNumbers)
 	corpus <- tm_map(corpus, PlainTextDocument)
 	corpus <- tm_map(corpus, stemDocument)
 }
@@ -104,16 +103,18 @@ corpus <- Corpus(vs)
 }
 #plotting
 {
-	(p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + geom_text(aes(size = rightText, 
-		label = row.names(rightTextdf), colour = freq.dif)) + geom_text(data = leftTextdf, 
-		aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, 
-			color = freq.dif)) + geom_text(data = equaldf, aes(x = freq.dif, 
-		y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + 
-		scale_size(range = c(2, 12), name = "frequency") + c) = "@_@_@_@scale_colour_gradient(low=\"darkred\", high=\"darkblue\", guide=\"none\") +\""
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + 
+	geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + 
+	geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, 
+	label = row.names(leftTextdf), size = leftText, color = freq.dif)) + 
+	geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, 
+	label = row.names(equaldf), size = rightText, color = freq.dif))+ 
+	scale_size(range = c(2, 12), name = "frequency") + 
+	#scale_colour_gradient(low="darkred", high="darkblue", guide="none") +
 	scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), 
-		labels = c(labelNeg, labelEqu, labelPos)) + scale_y_continuous(breaks = c(0), 
-		labels = c(" ")) + xlab(" ") + ylab(" ") + labs(title = labTitle) + 
-		xlab(" ") + ylab(" ")
+	labels = c(labelNeg, labelEqu, labelPos)) + scale_y_continuous(breaks = c(0), 
+	labels = c(" ")) + xlab(" ") + ylab(" ") + labs(title = labTitle) + 
+	xlab(" ") + ylab(" ")
 
 	p1 + theme_bw()
 
