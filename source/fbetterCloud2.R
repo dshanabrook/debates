@@ -7,7 +7,7 @@ setwd("~/ShinyApps/debates")
 	source("~/Documents/r/functions/sort.data.frame.R")
 	source("source/preprocessDebateText.R")
 }
-specialWords <- c("anderson","applause")
+specialWords <- c("anderson","applause","governor")
 optimal.spacing <- function(spaces) {
 	if (spaces > 1) {
 		spacing <- 1/spaces
@@ -32,9 +32,11 @@ corpus <- Corpus(vs)
 {
 	corpus <- tm_map(corpus, content_transformer(tolower))
 	corpus <- tm_map(corpus, function(x) removeWords(x, stopwords("english")))
+	corpus <- tm_map(corpus, function(x) removeWords(x, specialWords))
 	corpus <- tm_map(corpus, removePunctuation)
 	corpus <- tm_map(corpus, PlainTextDocument)
-	corpus <- tm_map(corpus, function(x) removeWords(x, specialWords))
+		corpus <- tm_map(corpus, function(x) removeWords(x, specialWords))
+
 #	corpus <- tm_map(corpus, stemDocument)
 }
 #termDocument  & scaling

@@ -1,0 +1,4434 @@
+data <- read.table(quotesFile, sep=",", header=T)
+library("zoo")#
+library("quantmod")#
+#
+quotesFile <- "~/ShinyApps/tosAsync/out/quotes.csv"#
+theClasses <- c("zoo", "character", rep("numeric",5))#
+data <- read.table(quotesFile, sep=",", header=T)#
+data.zoo <- read.zoo(quotesFile,format="%Y-%m-%d %H:%M:%S",FUN = as.POSIXct,#
+ header=T, sep=",")
+data.xts <- as.xts(data.zoo)
+opening <- data.xts['T07:50/T09:35']#
+opening$diff <- c(0,diff(as.numeric(opening$bid),1))#
+opening <- opening['T09:30/T09:35']#
+mean(opening$diff)#
+names(data)
+barplot(closing$diff, main="15:59 vs 16:03", sub="Positive: higher after close")#
+abline(h=mean(closing$diff))#
+barplot(y, add=T)#
+barplot(opening$diff, main="08:01 vs 09:30", sub="Positive: higher at open")#
+abline(h=mean(opening$diff))#
+barplot(y, add=T)
+eod <- data.xts['T15:29/T15:32']#
+eod$diff <- c(0,diff(as.numeric(eod$bid),1))#
+eod <- eod['T15:58/T16:00']#
+mean(eod$diff)
+eod <- data.xts['T15:29/T15:32']
+eod$diff <- c(0,diff(as.numeric(eod$bid),1))
+closing <- closing['T16:00/T16:05']
+eod <- data.xts['T15:29/T16:00']#
+eod$diff <- c(0,diff(as.numeric(eod$bid),1))#
+eod <- eod['T15:58/T16:00']#
+mean(eod$diff)
+eod
+barplot(eod$diff, main="15:30 vs 16:00", sub="Positive: higher at open")#
+abline(h=mean(eod$diff))#
+barplot(y, add=T)
+eod$diff
+barplot(eod$diff, main="15:30 vs 16:00", sub="Positive: higher at open")
+abline(h=mean(eod$diff))
+barplot(closing$diff, main="15:59 vs 16:03", sub="Positive: higher after close")#
+abline(h=mean(closing$diff))#
+barplot(y, add=T)
+mean(eod$diff)
+mean(closing$diff)
+barplot(eod$diff, main="15:30 vs 16:00", sub="Positive: higher at open",ylim=c(-2,2))#
+abline(h=mean(eod$diff))#
+barplot(y, add=T)
+barplot(closing$diff, main="15:59 vs 16:03", sub="Positive: higher after close",ylim=c(-2,2))#
+abline(h=mean(closing$diff))#
+barplot(opening$diff, main="08:01 vs 09:30", sub="Positive: higher at open",ylim=c(-2,2))#
+abline(h=mean(opening$diff))#
+barplot(eod$diff, main="15:30 vs 16:00", sub="Positive: higher at open",ylim=c(-2,2))#
+abline(h=mean(eod$diff))
+closing$diff
+runApp("indexanalysis")
+deployApp("wealthAnalysis")
+runApp("wealthAnalysis")
+devtools::install_github("jwdink/eyetrackingR")
+library(devtools)
+load_all(ggplot2)
+library(ggplot2)
+library(scales)
+library(shiny)#
+library(ggplot2)#
+library(jsonlite)#
+setwd("~/ShinyApps/openinterest/")#
+#
+source("source/googleInput.R")#
+ticker <- "SPX"#
+symbol <- ticker#
+inputStrikes <- 20#
+doDebug <<- T#
+theSize <- 12#
+allExpiration <- T
+ticker <- "SPY"
+library(shiny)#
+library(ggplot2)#
+library(jsonlite)#
+setwd("~/ShinyApps/openinterest/")#
+#
+source("source/googleInput.R")#
+ticker <- "RSX"
+symbol <- ticker#
+inputStrikes <- 20#
+doDebug <<- T#
+theSize <- 12
+allExpiration <- T
+library(quantmod)
+quote
+getOptionChainGoogle
+help(deployApp)
+library(shiny)#
+library(ggplot2)#
+library(jsonlite)#
+setwd("~/ShinyApps/openinterest/")#
+#
+source("source/googleInput.R")#
+ticker <- "AAPL"#
+symbol <- ticker#
+inputStrikes <- 20#
+doDebug <<- T#
+theSize <- 12#
+allExpiration <- T
+ticker <- "RSX"
+symbol <- ticker
+quote <- getAQuote(ticker)
+googChains <- getOptionChainGoogle(ticker)
+googChains
+library(shiny)#
+library(shinyapps)#
+setwd("~/shinyapps/")
+library("zoo")#
+library("ggplot2")#
+library("PerformanceAnalytics")#
+library("xts")#
+library(scales)#
+#
+toWealth <- function(x) {#
+	initial <- as.vector(x[1,])#
+	coredata(x) <- sweep(x,MARGIN=2,initial,'/')#
+	return(x)#
+}#
+#
+valueFile <- "~/ShinyApps/tosAsync/out/value.csv"#
+data.zoo <- read.zoo(valueFile, header=T, sep=",")#
+data.zoo <- subset(data.zoo, select=-c(mom,dad))#
+theData <- data.zoo#
+theData <- toWealth(data.zoo)#
+zoo.df = fortify(theData, melt = TRUE)#
+#
+p <- ggplot(aes(x = Index, y = Value, group=Series,colour=Series), data = zoo.df) + geom_line() + xlab("Index") +  scale_y_continuous("Value $", labels=comma) #
+#
+  p + facet_grid(Series~., scale="free_y", labeller="label_value")  #
+  p
+zoo.df
+head(zoo.df)
+head(theData)
+headIdata.zoo
+head(data.zoo)
+theData <- data.zoo#
+zoo.df = fortify(theData, melt = TRUE)#
+#
+p <- ggplot(aes(x = Index, y = Value, group=Series,colour=Series), data = zoo.df) + geom_line() + xlab("Index") +  scale_y_continuous("Value $", labels=comma) #
+#
+  p + facet_grid(Series~., scale="free_y", labeller="label_value")  #
+  p
+theDataActual <- data.zoo
+theData <- subset(theData, select=-roth)
+zoo.df = fortify(theData, melt = TRUE)#
+#
+p <- ggplot(aes(x = Index, y = Value, group=Series,colour=Series), data = zoo.df) + geom_line() + xlab("Index") +  scale_y_continuous("Value $", labels=comma) #
+#
+  p + facet_grid(Series~., scale="free_y", labeller="label_value")  #
+  p
+theData <- data.zoo#
+#
+zoo.df = fortify(theData, melt = TRUE)#
+#
+p <- ggplot(aes(x = Index, y = Value, group=Series,colour=Series), data = zoo.df) + geom_line() + xlab("Index") +  scale_y_continuous("Value $", labels=comma) #
+#
+  p + facet_grid(Series~., scale="free_y", labeller="label_value")  #
+  p
+library("zoo")#
+library("quantmod")#
+#
+quotesFile <- "~/ShinyApps/tosAsync/out/quotes.csv"#
+theClasses <- c("zoo", "character", rep("numeric",5))#
+data <- read.table(quotesFile, sep=",", header=T)#
+data.zoo <- read.zoo(quotesFile,format="%Y-%m-%d %H:%M:%S",FUN = as.POSIXct,#
+ header=T, sep=",")#
+data.xts <- as.xts(data.zoo)#
+opening <- data.xts['T07:50/T09:35']#
+opening$diff <- c(0,diff(as.numeric(opening$bid),1))#
+opening <- opening['T09:30/T09:35']#
+mean(opening$diff)#
+names(data)#
+closing <- data.xts['T15:50/T16:05']#
+closing$diff <- c(0,diff(as.numeric(closing$bid),1))#
+closing <- closing['T16:00/T16:05']#
+mean(closing$diff)#
+#
+barplot(closing$diff, main="15:59 vs 16:03", sub="Positive: higher after close")#
+abline(h=mean(closing$diff))#
+barplot(y, add=T)#
+barplot(opening$diff, main="08:01 vs 09:30", sub="Positive: higher at open")#
+abline(h=mean(opening$diff))#
+barplot(y, add=T)#
+********************************
+names(data)
+barplot(opening$diff, main="08:01 vs 09:30", sub="Positive: higher at open")#
+abline(h=mean(opening$diff))#
+barplot(y, add=T)
+barplot(h, add=T)
+barplot(y, add=T)
+opening <- data.xts['T07:50/T09:35']#
+opening$diff <- c(0,diff(as.numeric(opening$bid),1))
+barplot(opening$diff, main="08:01 vs 09:30", sub="Positive: higher at open")
+abline(h=mean(opening$diff))
+barplot(openingAfter$diff, main="15:59 vs 16:03", sub="Positive: higher after close")
+require(quantmod)#
+spy = getSymbols("SPY",from="1900-01-01",auto.assign=F)#
+spy.sma = runMean(Cl(spy), 200)#
+mm = merge(Cl(spy), spy.sma, all=F)#
+ind = mm[,1] >= mm[,2]#
+print(tail(ind,4))#
+if (ind[nrow(ind)]) {#
+	print("buy on friday")#
+} else#
+	print("be patient")
+require(quantmod)#
+spy = getSymbols("SPY",from="1900-01-01",auto.assign=F)#
+spy.sma = runMean(Cl(spy), 200)#
+mm = merge(Cl(spy), spy.sma, all=F)#
+ind = mm[,1] >= mm[,2]#
+print(tail(ind,4))#
+if (ind[nrow(ind)]) {#
+	print("buy on friday")#
+} else#
+	print("be patient")#
+rets = ROC(Cl(spy),type="discrete")#
+adj.rets = rets/sqrt(runSum(rets*rets,10)/9)#
+sma = runMean(adj.rets,n=200)#
+ind = sma >= 0#
+print(tail(ind,4))#
+if (ind[nrow(ind)]) {#
+	print("buy on friday")#
+} else#
+	print("be patientbased on SMA")
+library(shiny)#
+library(shinyapps)#
+setwd("~/shinyapps/")#
+#
+options(shiny.reactlog=TRUE)#
+runApp("openinterest")
+library(shiny)#
+library(shinyapps)#
+setwd("~/shinyapps/")#
+#
+options(shiny.reactlog=TRUE)
+runApp("openinterest")
+require(quantmod)#
+spy = getSymbols("SPY",from="1900-01-01",auto.assign=F)#
+spy.sma = runMean(Cl(spy), 200)#
+mm = merge(Cl(spy), spy.sma, all=F)#
+ind = mm[,1] >= mm[,2]#
+print(tail(ind,4))#
+if (ind[nrow(ind)]) {#
+	print("buy on friday")#
+} else#
+	print("be patient")#
+rets = ROC(Cl(spy),type="discrete")#
+adj.rets = rets/sqrt(runSum(rets*rets,10)/9)#
+sma = runMean(adj.rets,n=200)#
+ind = sma >= 0#
+print(tail(ind,4))#
+#
+if (ind[nrow(ind)]) {#
+	print("buy on friday")#
+} else#
+	print("be patient based on SMA")
+options(echo=FALSE)#
+require(quantmod)#
+spy = getSymbols("SPY",from="1900-01-01",auto.assign=F)#
+spy.sma = runMean(Cl(spy), 200)#
+mm = merge(Cl(spy), spy.sma, all=F)#
+ind = mm[,1] >= mm[,2]#
+print(tail(ind,4))#
+if (ind[nrow(ind)]) {#
+	print("buy on friday")#
+} else#
+	print("be patient")#
+rets = ROC(Cl(spy),type="discrete")#
+adj.rets = rets/sqrt(runSum(rets*rets,10)/9)#
+sma = runMean(adj.rets,n=200)#
+ind = sma >= 0#
+print(tail(ind,4))#
+#
+if (ind[nrow(ind)]) {#
+	print("buy on friday")#
+} else#
+	print("be patient based on SMA")
+sink("/dev/null") #
+require(quantmod)#
+spy = getSymbols("SPY",from="1900-01-01",auto.assign=F)#
+spy.sma = runMean(Cl(spy), 200)#
+mm = merge(Cl(spy), spy.sma, all=F)#
+ind = mm[,1] >= mm[,2]#
+print(tail(ind,4))#
+if (ind[nrow(ind)]) {#
+	print("buy on friday")#
+} else#
+	print("be patient")#
+rets = ROC(Cl(spy),type="discrete")#
+adj.rets = rets/sqrt(runSum(rets*rets,10)/9)#
+sma = runMean(adj.rets,n=200)#
+ind = sma >= 0#
+print(tail(ind,4))#
+sink()#
+if (ind[nrow(ind)]) {#
+	print("buy on friday")#
+} else#
+	print("be patient based on SMA")
+sink("/dev/null")
+require(quantmod)
+sink("/dev/null") #
+require(quantmod)
+notify <- function(message="Operation complete") {#
+  system(sprintf("/usr/bin/terminal-notifier -title 'RStudio' -message '%s' -sender org.rstudio.RStudio -activate org.rstudio.RStudio",#
+                 message),#
+         ignore.stdout=TRUE, ignore.stderr=TRUE, wait=FALSE)#
+}
+notify("long computation complete")
+system(sprintf("/usr/bin/terminal-notifier -title 'RStudio' -message '%s' -sender org.rstudio.RStudio -activate org.rstudio.RStudio",#
+                 "hello world")
+system(sprintf("/usr/bin/terminal-notifier -title 'RStudio' -message '%s' -sender org.rstudio.RStudio -activate org.rstudio.RStudio",#
+                 "hello world"))
+"hello world"))
+system(sprintf("terminal-notifier -title 'RStudio' -message '%s' -sender org.rstudio.RStudio -activate org.rstudio.RStudio",#
+                 "hello world"))
+notify <- function(message="Operation complete") {#
+  system(sprintf("terminal-notifier -title 'RStudio' -message '%s' -sender org.rstudio.RStudio -activate org.rstudio.RStudio",#
+                 message),#
+         ignore.stdout=TRUE, ignore.stderr=TRUE, wait=FALSE)#
+}#
+notify("long computation complete")
+require(quantmod)#
+notify <- function(message="Operation complete") {#
+  system(sprintf("terminal-notifier -title 'RStudio' -message '%s' -sender org.rstudio.RStudio -activate org.rstudio.RStudio",#
+                 message),#
+         ignore.stdout=TRUE, ignore.stderr=TRUE, wait=FALSE)#
+}#
+spy = getSymbols("SPY",from="1900-01-01",auto.assign=F)#
+spy.sma = runMean(Cl(spy), 200)#
+mm = merge(Cl(spy), spy.sma, all=F)#
+ind = mm[,1] >= mm[,2]#
+print(tail(ind,4))#
+if (ind[nrow(ind)]) {#
+	print("buy on friday")#
+} else#
+	print("be patient")#
+rets = ROC(Cl(spy),type="discrete")#
+adj.rets = rets/sqrt(runSum(rets*rets,10)/9)#
+sma = runMean(adj.rets,n=200)#
+ind = sma >= 0#
+print(tail(ind,4))#
+#
+if (ind[nrow(ind)]) {#
+	notify("buy on friday")#
+} else#
+	notify("be patient based on SMA")
+require(quantmod)#
+notify <- function(message="Operation complete") {#
+  system(sprintf("terminal-notifier -title 'R' -message '%s' -sender org.rstudio.RStudio -activate org.rstudio.RStudio",#
+                 message),#
+         ignore.stdout=TRUE, ignore.stderr=TRUE, wait=FALSE)#
+}#
+spy = getSymbols("SPY",from="1900-01-01",auto.assign=F)#
+spy.sma = runMean(Cl(spy), 200)#
+mm = merge(Cl(spy), spy.sma, all=F)#
+ind = mm[,1] >= mm[,2]#
+print(tail(ind,4))#
+if (ind[nrow(ind)]) {#
+	print("buy on friday")#
+} else#
+	print("be patient")#
+rets = ROC(Cl(spy),type="discrete")#
+adj.rets = rets/sqrt(runSum(rets*rets,10)/9)#
+sma = runMean(adj.rets,n=200)#
+ind = sma >= 0#
+print(tail(ind,4))#
+#
+if (ind[nrow(ind)]) {#
+	notify("buy on friday")#
+} else#
+	notify("be patient based on SMA")
+library("zoo")#
+library("quantmod")#
+#
+quotesFile <- "~/ShinyApps/tosAsync/out/quotes.csv"#
+theClasses <- c("zoo", "character", rep("numeric",5))#
+data <- read.table(quotesFile, sep=",", header=T)#
+data.zoo <- read.zoo(quotesFile,format="%Y-%m-%d %H:%M:%S",FUN = as.POSIXct,#
+ header=T, sep=",")#
+data.xts <- as.xts(data.zoo)#
+opening <- data.xts['T07:50/T09:35']#
+opening$diff <- c(0,diff(as.numeric(opening$bid),1))#
+opening <- opening['T09:30/T09:35']#
+mean(opening$diff)#
+names(data)#
+closing <- data.xts['T15:50/T16:05']#
+closing$diff <- c(0,diff(as.numeric(closing$bid),1))#
+closing <- closing['T16:00/T16:05']#
+mean(closing$diff)#
+#
+barplot(closing$diff, main="15:59 vs 16:03", sub="Positive: higher after close")#
+abline(h=mean(closing$diff))#
+barplot(y, add=T)#
+barplot(opening$diff, main="08:01 vs 09:30", sub="Positive: higher at open")#
+abline(h=mean(opening$diff))#
+barplot(y, add=T)#
+********************************#
+openingAfter <- data.xts['T09:30/T10:00']#
+openingAfter $diff <- c(0,diff(as.numeric(openingAfter$bid),1))#
+openingAfter <- openingAfter['T09:58/T10:00']#
+mean(openingAfter $diff)#
+#
+barplot(openingAfter$diff, main="15:59 vs 16:03", sub="Positive: higher after close")#
+abline(h=mean(openingAfter$diff))
+head(data.xts)
+options(echo=T)
+sink()
+x <- 1
+x
+library("zoo")#
+library("quantmod")#
+#
+quotesFile <- "~/ShinyApps/tosAsync/out/quotes.csv"#
+theClasses <- c("zoo", "character", rep("numeric",5))#
+data <- read.table(quotesFile, sep=",", header=T)#
+data.zoo <- read.zoo(quotesFile,format="%Y-%m-%d %H:%M:%S",FUN = as.POSIXct,#
+ header=T, sep=",")#
+data.xts <- as.xts(data.zoo)#
+opening <- data.xts['T07:50/T09:35']#
+opening$diff <- c(0,diff(as.numeric(opening$bid),1))#
+opening <- opening['T09:30/T09:35']#
+mean(opening$diff)#
+names(data)
+head(data)
+summary(data)
+summary(data.xts)
+summary(data.xts$index)
+indexformat(data.xts)
+indexClass(data.xts)
+indexFormat(data.xts)
+opening <- data.xts['T07:50/T09:35']
+opening
+opening$diff <- c(0,diff(as.numeric(opening$bid),1))
+opening$diff
+opening <- opening['T09:30/T09:35']
+mean(opening$diff)
+closing <- data.xts['T15:50/T16:05']#
+closing$diff <- c(0,diff(as.numeric(closing$bid),1))#
+closing <- closing['T16:00/T16:05']#
+mean(closing$diff)
+closing <- data.xts['T15:50/T16:05']
+closing$diff <- c(0,diff(as.numeric(closing$bid),1))
+closing
+data.xts
+openingAfter <- data.xts['T09:30/T10:00']#
+openingAfter $diff <- c(0,diff(as.numeric(openingAfter$bid),1))#
+openingAfter <- openingAfter['T09:58/T10:00']#
+mean(openingAfter $diff)
+opening <- data.xts['T07:50/T09:35']#
+opening$diff <- c(0,diff(as.numeric(opening$bid),1))#
+opening <- opening['T09:30/T09:35']#
+mean(opening$diff)
+openingAfter <- data.xts['T07:50/T10:00']#
+openingAfter $diff <- c(0,diff(as.numeric(openingAfter$bid),2))
+openingAfter
+preOpenToPostOpen <- data.xts['T07:50/T10:00']#
+perOpenToPostOpen <- data.xts["2015-10-19/"]
+preOpenToPostOpen <- data.xts['T07:50/T10:00']#
+perOpenToPostOpen <- preOpenToPostOpen["2015-10-19/"]
+perOpenToPostOpen
+preOpenToPostOpen <- data.xts['T07:50/T10:00']#
+perOpenToPostOpen <- preOpenToPostOpen["2015-10-19/"]#
+preOpenToPostOpen $diff <- c(0,diff(as.numeric(preOpenToPostOpen $bid),2))
+preOpenToPostOpen <- data.xts['T07:50/T10:00']#
+perOpenToPostOpen <- preOpenToPostOpen["2015-10-19/"]#
+preOpenToPostOpen$diff <- c(0,diff(as.numeric(preOpenToPostOpen$bid),2))#
+preOpenToPostOpen <- preOpenToPostOpen['T09:58/T10:00']#
+mean(openingAfter$diff)
+preOpenToPostOpen <- preOpenToPostOpen[-"T09:30/T09:35"]
+helpIdiff
+help(diff)
+preOpenToPostOpen$diff <- c(0,diff(as.numeric(preOpenToPostOpen$bid),lag=2))
+preOpenToPostOpen$diff <- c(0,diff(as.numeric(preOpenToPostOpen$bid),differences=2))
+diff(as.numeric(preOpenToPostOpen$bid),lag=2)
+preOpenToPostOpen$diff <- c(0,0,diff(as.numeric(preOpenToPostOpen$bid),lag=2))
+preOpenToPostOpen
+preOpenToPostOpen <- data.xts['T07:50/T10:00']#
+perOpenToPostOpen <- preOpenToPostOpen["2015-10-19/"]#
+preOpenToPostOpen <- preOpenToPostOpen[-"T09:30/T09:35"]#
+preOpenToPostOpen$diff <- c(0,0,diff(as.numeric(preOpenToPostOpen$bid),lag=2))#
+preOpenToPostOpen <- preOpenToPostOpen['T09:58/T10:00']
+mean(openingAfter$diff)
+mean(preOpenToPostOpen$diff)
+postOpen <- data.xts['T9:50/T10:02']
+postOpen <- data.xts['T09:50/T10:02']
+postOpen$bid
+postOpen$close
+postOpen$diff <- postOpen$bid - postOpen$close
+class(postOpen)
+postOpen$diff <- as.numeric(postOpen$bid) - as.numeric(postOpen$close)
+postOpen
+mean(postOpen$diff)
+closeToOpen <- as.numeric(closeTo10$open) - as.numeric(closeTo10$close)#
+#
+mean(closeToOpen)
+closeToOpen <- as.numeric(closeTo10$open) - as.numeric(closeTo10$close)
+closeTo10 <- data.xts['T09:50/T10:02']#
+closeTo10$diff <- as.numeric(closeTo10$bid) - as.numeric(closeTo10$close)#
+mean(closeTo10$diff)
+closeToOpen <- as.numeric(closeTo10$open) - as.numeric(closeTo10$close)#
+mean(closeToOpen)
+library("zoo")#
+library("quantmod")#
+#
+quotesFile <- "~/ShinyApps/tosAsync/out/quotes.csv"#
+theClasses <- c("zoo", "character", rep("numeric",5))#
+data <- read.table(quotesFile, sep=",", header=T)#
+data.zoo <- read.zoo(quotesFile,format="%Y-%m-%d %H:%M:%S",FUN = as.POSIXct,#
+ header=T, sep=",")#
+data.xts <- as.xts(data.zoo)
+closeTo10 <- data.xts['T09:50/T10:02']#
+closeTo10$diff <- as.numeric(closeTo10$bid) - as.numeric(closeTo10$close)#
+mean(closeTo10$diff)#
+#
+closeToOpen <- as.numeric(closeTo10$open) - as.numeric(closeTo10$close)#
+mean(closeToOpen)
+library("zoo")#
+library("ggplot2")#
+library("PerformanceAnalytics")#
+library("xts")#
+library(scales)#
+#
+toWealth <- function(x) {#
+	initial <- as.vector(x[1,])#
+	coredata(x) <- sweep(x,MARGIN=2,initial,'/')#
+	return(x)#
+}#
+#
+valueFile <- "~/ShinyApps/tosAsync/out/value.csv"#
+data.zoo <- read.zoo(valueFile, header=T, sep=",")#
+data.zoo <- subset(data.zoo, select=-c(mom,dad))#
+theData <- toWealth(data.zoo)#
+zoo.df = fortify(theData, melt = TRUE)#
+#
+p <- ggplot(aes(x = Index, y = Value, group=Series,colour=Series), data = zoo.df) + geom_line() + xlab("Index") +  scale_y_continuous("Value $", labels=comma) #
+#
+  p + facet_grid(Series~., scale="free_y", labeller="label_value")  #
+  p  #
+theData <- data.zoo#
+#
+zoo.df = fortify(theData, melt = TRUE)#
+#
+p <- ggplot(aes(x = Index, y = Value, group=Series,colour=Series), data = zoo.df) + geom_line() + xlab("Index") +  scale_y_continuous("Value $", labels=comma) #
+#
+  p + facet_grid(Series~., scale="free_y", labeller="label_value")  #
+  p
+library("zoo")#
+library("ggplot2")#
+library("PerformanceAnalytics")#
+library("xts")#
+library(scales)#
+#
+toWealth <- function(x) {#
+	initial <- as.vector(x[1,])#
+	coredata(x) <- sweep(x,MARGIN=2,initial,'/')#
+	return(x)#
+}#
+#
+valueFile <- "~/ShinyApps/tosAsync/out/value.csv"#
+data.zoo <- read.zoo(valueFile, header=T, sep=",")
+library("zoo")#
+library("ggplot2")#
+library("PerformanceAnalytics")#
+library("xts")#
+library(scales)#
+#
+toWealth <- function(x) {#
+	initial <- as.vector(x[1,])#
+	coredata(x) <- sweep(x,MARGIN=2,initial,'/')#
+	return(x)#
+}#
+#
+valueFile <- "~/ShinyApps/tosAsync/out/value.csv"#
+data.zoo <- read.zoo(valueFile, header=T, sep=",")#
+data.zoo <- subset(data.zoo, select=-c(mom,dad))#
+with(data.zoo#
+data.zoo$all <- roth + roll + ira + reg)
+data.zoo$all <- roth + roll + ira + reg)
+with(data.zoo,#
+data.zoo$all <- roth + roll + ira + reg)
+attach(data.zoo)#
+data.zoo$all <- roth + roll + ira + reg)#
+detach(data.zoo)
+data.zoo$all <- data.zoo$roth + data.zoo$roll + data.zoo$ira + data.zoo$reg
+data.zoo
+theData <- toWealth(data.zoo)#
+zoo.df = fortify(theData, melt = TRUE)#
+#
+p <- ggplot(aes(x = Index, y = Value, group=Series,colour=Series), data = zoo.df) + geom_line() + xlab("Index") +  scale_y_continuous("Value $", labels=comma) #
+#
+  p + facet_grid(Series~., scale="free_y", labeller="label_value")  #
+  p  #
+theData <- data.zoo#
+#
+zoo.df = fortify(theData, melt = TRUE)#
+#
+p <- ggplot(aes(x = Index, y = Value, group=Series,colour=Series), data = zoo.df) + geom_line() + xlab("Index") +  scale_y_continuous("Value $", labels=comma) #
+#
+  p + facet_grid(Series~., scale="free_y", labeller="label_value")  #
+  p
+library("zoo")#
+library("quantmod")#
+#
+quotesFile <- "~/ShinyApps/tosAsync/out/quotes.csv"#
+theClasses <- c("zoo", "character", rep("numeric",5))#
+data <- read.table(quotesFile, sep=",", header=T)#
+data.zoo <- read.zoo(quotesFile,format="%Y-%m-%d %H:%M:%S",FUN = as.POSIXct,#
+ header=T, sep=",")#
+data.xts <- as.xts(data.zoo)#
+opening <- data.xts['T07:50/T09:35']#
+opening$diff <- c(0,diff(as.numeric(opening$bid),1))#
+opening <- opening['T09:30/T09:35']#
+mean(opening$diff)#
+names(data)#
+closing <- data.xts['T15:50/T16:05']#
+closing$diff <- c(0,diff(as.numeric(closing$bid),1))#
+closing <- closing['T16:00/T16:05']#
+mean(closing$diff)#
+#
+barplot(closing$diff, main="15:59 vs 16:03", sub="Positive: higher after close")#
+abline(h=mean(closing$diff))#
+barplot(y, add=T)#
+barplot(opening$diff, main="08:01 vs 09:30", sub="Positive: higher at open")#
+abline(h=mean(opening$diff))#
+barplot(y, add=T)#
+********************************#
+openingAfter <- data.xts['T09:30/T10:00']#
+openingAfter$diff <- c(0,diff(as.numeric(openingAfter$bid),1))#
+openingAfter <- openingAfter['T09:58/T10:00']#
+mean(openingAfter$diff)#
+preOpenToPostOpen <- data.xts['T07:50/T10:00']#
+perOpenToPostOpen <- preOpenToPostOpen["2015-10-19/"]#
+preOpenToPostOpen <- preOpenToPostOpen[-"T09:30/T09:35"]#
+preOpenToPostOpen$diff <- c(0,0,diff(as.numeric(preOpenToPostOpen$bid),lag=2))#
+preOpenToPostOpen <- preOpenToPostOpen['T09:58/T10:00']#
+mean(preOpenToPostOpen$diff)#
+closeTo10 <- data.xts['T09:50/T10:02']#
+closeTo10$diff <- as.numeric(closeTo10$bid) - as.numeric(closeTo10$close)#
+mean(closeTo10$diff)#
+#
+closeToOpen <- as.numeric(closeTo10$open) - as.numeric(closeTo10$close)#
+mean(closeToOpen)
+library("zoo")#
+library("ggplot2")#
+library("PerformanceAnalytics")#
+library("xts")#
+library(scales)#
+#
+toWealth <- function(x) {#
+	initial <- as.vector(x[1,])#
+	coredata(x) <- sweep(x,MARGIN=2,initial,'/')#
+	return(x)#
+}#
+#
+valueFile <- "~/ShinyApps/tosAsync/out/value.csv"#
+data.zoo <- read.zoo(valueFile, header=T, sep=",")#
+data.zoo <- subset(data.zoo, select=-c(mom,dad))#
+data.zoo$all <- data.zoo$roth + data.zoo$roll + data.zoo$ira + data.zoo$reg#
+theData <- toWealth(data.zoo)#
+zoo.df = fortify(theData, melt = TRUE)#
+#
+p <- ggplot(aes(x = Index, y = Value, group=Series,colour=Series), data = zoo.df) + geom_line() + xlab("Index") +  scale_y_continuous("Value $", labels=comma) #
+#
+  p + facet_grid(Series~., scale="free_y", labeller="label_value")  #
+  p  #
+theData <- data.zoo#
+#
+zoo.df = fortify(theData, melt = TRUE)#
+#
+p <- ggplot(aes(x = Index, y = Value, group=Series,colour=Series), data = zoo.df) + geom_line() + xlab("Index") +  scale_y_continuous("Value $", labels=comma) #
+#
+  p + facet_grid(Series~., scale="free_y", labeller="label_value")  #
+  p
+theData
+library("XML2R")#
+library("RCurl")#
+source("~/ShinyApps/tosAsync/source/functions.R")#
+source("~/ShinyApps/tosAsync/private/details.R")
+ticker <- "AAPL"
+allOrders <<- data.frame()#
+#
+sessionid <- TDALogin("TSLU", "1.0", myLoginName, myPassWord)
+account <- getAccount(sessionid,rollID)
+stockBuyingPower <- facToNum(account$balance$stock.buying.power)
+stockBuyingPower
+quote <- TDAQuote(sessionid,ticker)
+getOrder
+TDATrade
+myLoginName
+myPassWord
+setwd("~/ShinyApps/debates")#
+#
+{#
+	library(tm)#
+	library(ggplot2)#
+	library(gdata)#
+	source("~/Documents/r/functions/sort.data.frame.R")#
+	source("source/preprocessDebateText.R")#
+}#
+specialWords <- c("anderson","applause")#
+optimal.spacing <- function(spaces) {#
+	if (spaces > 1) {#
+		spacing <- 1/spaces#
+		if (spaces%%2 > 0) {#
+			lim <- spacing * floor(spaces/2)#
+			return(seq(-lim, lim, spacing))#
+		} else {#
+			lim <- spacing * (spaces - 1)#
+			return(seq(-lim, lim, spacing * 2))#
+		}#
+	} else {#
+		return(0)#
+	}#
+}#
+#
+rightDoc <- republican#
+leftDoc <- democrat#
+docs <- c(rightDoc, leftDoc)#
+vs <- VectorSource(docs)#
+corpus <- Corpus(vs)#
+#
+{#
+	corpus <- tm_map(corpus, content_transformer(tolower))#
+	corpus <- tm_map(corpus, function(x) removeWords(x, stopwords("english")))#
+	corpus <- tm_map(corpus, removePunctuation)#
+	corpus <- tm_map(corpus, PlainTextDocument)#
+	corpus <- tm_map(corpus, function(x) removeWords(x, specialWords))#
+#
+}#
+#
+{#
+	corpus.matrix <- TermDocumentMatrix(corpus)#
+	sink(file = "temp")#
+	corpus.df <- as.data.frame(inspect(corpus.matrix))#
+	sink()#
+	}#
+source("source/fgraphing.R")
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	}#
+#
+{#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <- 0#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", left, "vs", right, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 11), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(), title=element_text("labTitle")#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	}#
+#
+{#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <- 0#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 11), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(), title=element_text("labTitle")#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	}#
+#
+{#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <- 0#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}
+p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 11), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(), title=element_text("labTitle")
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 11), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(), title=element_text("labTitle"))#
+#
+}
+p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(), title=element_text(labTitle))
+p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(), title=labTitle)
+element_text(labTitle))
+element_text(labTitle)
+p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(), title=element_text(paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")))
+labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")
+labTitle
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	}#
+#
+{#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <- 0#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(1, 11), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	}#
+#
+{#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <- 0#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(1, 8), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	}#
+#
+{#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <- 0#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(4, 8), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	}#
+#
+{#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <- 0#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(1, 15), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	}#
+#
+{#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <- 0#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+names(rightText.spacing)
+names(leftText.spacing)
+as.vector(equal.spacing)
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	}#
+#
+{#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 5#
+minDiff <- -5#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	}#
+#
+{#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- -5#
+minDiff <- 5#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	}#
+#
+{#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- -1#
+minDiff <- 1#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	}#
+#
+{#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	}#
+#
+{#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif > maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif < minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+sizeFactor
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+outlierLimit
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 15#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 20#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 25#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 24#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_log10(breaks = c(0), labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_sqrt(breaks = c(0), labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_reverse(breaks = c(0), labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+help(breaks)
+help(scale_y_continuous)
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), expand = waiver(), labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = 1:20,  labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = 1:3,  labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = 1:4,  labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = 1:2,  labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0),  labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), expand=c(0,1),  labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), expand=c(0,2),  labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), expand=c(0,.5),  labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), expand=c(0,0.25),  labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), expand=c(-0.5,0.1),  labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), expand=c(-0.1,0.1),  labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), expand=c(0,0.1),  labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif >= maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif <= minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, position="jitter", aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), expand=c(0,0.1),  labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif > maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif < minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, position="jitter", aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), expand=c(0,0.1),  labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()#
+	p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+p1 + theme_bw() + + geom_jitter(position = position_jitter(height = .5))
+p1 + theme_bw()  + geom_jitter(position = position_jitter(height = .5))
+help(position)
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif > maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif < minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, position = position_jitter(w = 0.1, h = 0.1), aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), expand=c(0,0.1),  labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()  #
+		p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif > maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif < minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, position = position_jitter(w = 0, h = 0.5), aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), expand=c(0,0.1),  labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()  #
+		p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif > maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif < minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	jitterParm <- position = position_jitter(w = 0.1, h = 0.1)#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, position = jitterParm, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), expand=c(0,0.1),  labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()  #
+		p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+jitterParm <- position = position_jitter(w = 0.1, h = 0.1)
+jitterParm <- position_jitter(w = 0.1, h = 0.1)
+jitterParm
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif > maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif < minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	jitterParm <- position_jitter(w = 0.1, h = 0.1)#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) + #
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, position = jitterParm, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), expand=c(0,0.1),  labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()  #
+		p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif > maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif < minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	jitterParm <- position_jitter(w = 0.1, h = 0.1)#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) +  position = jitterParm +#
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, position = jitterParm, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), expand=c(0,0.1),  labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()  #
+		p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif > maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif < minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	jitterParm <- position_jitter(w = 0.1, h = 0.1)#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) +   jitterParm +#
+		geom_text(aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, position = jitterParm, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), expand=c(0,0.1),  labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()  #
+		p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif > maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif < minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	jitterParm <- position_jitter(w = 0, h = 0.3)#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) +  #
+		geom_text(position = jitterParm, aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, position = jitterParm, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), expand=c(0,0.1),  labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()  #
+		p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif > maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif < minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	jitterParm <- position_jitter(w = 0.2, h = 0.2)#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) +  #
+		geom_text(position = jitterParm, aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, position = jitterParm, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), expand=c(0,0.1),  labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()  #
+		p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif > maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif < minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	jitterParm <- position_jitter(w = 0.05, h = 0.05)#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) +  #
+		geom_text(position = jitterParm, aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, position = jitterParm, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), expand=c(0,0.1),  labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()  #
+		p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+setwd("~/ShinyApps/debates")#
+#
+{#
+	library(tm)#
+	library(ggplot2)#
+	library(gdata)#
+	source("~/Documents/r/functions/sort.data.frame.R")#
+	source("source/preprocessDebateText.R")#
+}#
+specialWords <- c("anderson","applause","govenor")#
+optimal.spacing <- function(spaces) {#
+	if (spaces > 1) {#
+		spacing <- 1/spaces#
+		if (spaces%%2 > 0) {#
+			lim <- spacing * floor(spaces/2)#
+			return(seq(-lim, lim, spacing))#
+		} else {#
+			lim <- spacing * (spaces - 1)#
+			return(seq(-lim, lim, spacing * 2))#
+		}#
+	} else {#
+		return(0)#
+	}#
+}#
+#
+rightDoc <- republican#
+leftDoc <- democrat#
+docs <- c(rightDoc, leftDoc)#
+vs <- VectorSource(docs)#
+corpus <- Corpus(vs)#
+#
+{#
+	corpus <- tm_map(corpus, content_transformer(tolower))#
+	corpus <- tm_map(corpus, function(x) removeWords(x, stopwords("english")))#
+	corpus <- tm_map(corpus, removePunctuation)#
+	corpus <- tm_map(corpus, PlainTextDocument)#
+	corpus <- tm_map(corpus, function(x) removeWords(x, specialWords))#
+#
+}#
+#
+{#
+	corpus.matrix <- TermDocumentMatrix(corpus)#
+	sink(file = "temp")#
+	corpus.df <- as.data.frame(inspect(corpus.matrix))#
+	sink()#
+	}#
+source("source/fgraphing.R")
+cutoffWordFr <- 18#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif > maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif < minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	jitterParm <- position_jitter(w = 0.1, h = 0.1)#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) +  #
+		geom_text(position = jitterParm, aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, position = jitterParm, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), expand=c(0,0.1),  labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()  #
+		p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())#
+#
+}
+setwd("~/ShinyApps/debates")#
+#
+{#
+	library(tm)#
+	library(ggplot2)#
+	library(gdata)#
+	source("~/Documents/r/functions/sort.data.frame.R")#
+	source("source/preprocessDebateText.R")#
+}#
+specialWords <- c("anderson","applause","governor")#
+optimal.spacing <- function(spaces) {#
+	if (spaces > 1) {#
+		spacing <- 1/spaces#
+		if (spaces%%2 > 0) {#
+			lim <- spacing * floor(spaces/2)#
+			return(seq(-lim, lim, spacing))#
+		} else {#
+			lim <- spacing * (spaces - 1)#
+			return(seq(-lim, lim, spacing * 2))#
+		}#
+	} else {#
+		return(0)#
+	}#
+}#
+#
+rightDoc <- republican#
+leftDoc <- democrat#
+docs <- c(rightDoc, leftDoc)#
+vs <- VectorSource(docs)#
+corpus <- Corpus(vs)#
+#
+{#
+	corpus <- tm_map(corpus, content_transformer(tolower))#
+	corpus <- tm_map(corpus, function(x) removeWords(x, stopwords("english")))#
+	corpus <- tm_map(corpus, removePunctuation)#
+	corpus <- tm_map(corpus, PlainTextDocument)#
+	corpus <- tm_map(corpus, function(x) removeWords(x, specialWords))#
+#
+}#
+#
+{#
+	corpus.matrix <- TermDocumentMatrix(corpus)#
+	sink(file = "temp")#
+	corpus.df <- as.data.frame(inspect(corpus.matrix))#
+	sink()#
+	}#
+source("source/fgraphing.R")
+specialWords
+p1 + theme_bw()
+p1 + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())
+setwd("~/ShinyApps/debates")#
+#
+{#
+	library(tm)#
+	library(ggplot2)#
+	library(gdata)#
+	source("~/Documents/r/functions/sort.data.frame.R")#
+	source("source/preprocessDebateText.R")#
+}#
+specialWords <- c("anderson","applause","governor")#
+optimal.spacing <- function(spaces) {#
+	if (spaces > 1) {#
+		spacing <- 1/spaces#
+		if (spaces%%2 > 0) {#
+			lim <- spacing * floor(spaces/2)#
+			return(seq(-lim, lim, spacing))#
+		} else {#
+			lim <- spacing * (spaces - 1)#
+			return(seq(-lim, lim, spacing * 2))#
+		}#
+	} else {#
+		return(0)#
+	}#
+}#
+#
+rightDoc <- republican#
+leftDoc <- democrat#
+docs <- c(rightDoc, leftDoc)#
+vs <- VectorSource(docs)#
+corpus <- Corpus(vs)#
+#
+{#
+	corpus <- tm_map(corpus, content_transformer(tolower))#
+	corpus <- tm_map(corpus, function(x) removeWords(x, stopwords("english")))#
+	corpus <- tm_map(corpus, function(x) removeWords(x, specialWords))#
+	corpus <- tm_map(corpus, removePunctuation)#
+	corpus <- tm_map(corpus, PlainTextDocument)#
+		corpus <- tm_map(corpus, function(x) removeWords(x, specialWords))#
+}#
+#
+{#
+	corpus.matrix <- TermDocumentMatrix(corpus)#
+	sink(file = "temp")#
+	corpus.df <- as.data.frame(inspect(corpus.matrix))#
+	sink()#
+	}#
+source("source/fgraphing.R")
+cutoffWordFr <- 20#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif > maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif < minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud corpus", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	jitterParm <- position_jitter(w = 0.1, h = 0.1)#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) +  #
+		geom_text(position = jitterParm, aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, position = jitterParm, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), expand=c(0,0.1),  labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()  #
+}
+cutoffWordFr <- 20#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif > maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif < minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Word Cloud", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	jitterParm <- position_jitter(w = 0.1, h = 0.1)#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) +  #
+		geom_text(position = jitterParm, aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, position = jitterParm, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), expand=c(0,0.1),  labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()  #
+}
+cutoffWordFr <- 20#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif > maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif < minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Debate Cloud:", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	jitterParm <- position_jitter(w = 0.1, h = 0.1)#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) +  #
+		geom_text(position = jitterParm, aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, position = jitterParm, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkred", high = "darkblue", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), expand=c(0,0.1),  labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()  #
+}
+cutoffWordFr <- 20#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif > maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif < minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Debate Cloud:", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	jitterParm <- position_jitter(w = 0.1, h = 0.1)#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) +  #
+		geom_text(position = jitterParm, aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, position = jitterParm, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "darkblue", high = "darkred", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), expand=c(0,0.1),  labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()  #
+}
+cutoffWordFr <- 20#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif > maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif < minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Debate Cloud:", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	jitterParm <- position_jitter(w = 0.1, h = 0.1)#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) +  #
+		geom_text(position = jitterParm, aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, position = jitterParm, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "blue", high = "darkred", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), expand=c(0,0.1),  labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()  #
+}
+cutoffWordFr <- 20#
+outlierLimit <- 25#
+{#
+	names(corpus.df) <- c("rightText", "leftText")#
+	sizeFactor <- sum(corpus.df$leftText)/sum(corpus.df$rightText)#
+	corpus.df <- subset(corpus.df, (rightText + leftText) > cutoffWordFr)#
+	corpus.df$rightText <- round(corpus.df$rightText * sizeFactor)#
+	corpus.df <- transform(corpus.df, freq.dif = rightText - leftText)#
+	corpus.df[(abs(corpus.df$freq.dif)<=1),]$freq.dif <- 0#
+	}#
+#
+{#
+	outlierLimit <- 23#
+	table(corpus.df$freq.dif)#
+	corpus.df[(corpus.df$freq.dif < -outlierLimit), ]$freq.dif <- -outlierLimit#
+	corpus.df[(corpus.df$freq.dif > outlierLimit), ]$freq.dif <- outlierLimit#
+	table(corpus.df$freq.dif)#
+}#
+#
+{#
+maxDiff <- 0#
+minDiff <-0#
+rightTextdf <- subset(corpus.df, freq.dif > maxDiff) #
+leftTextdf <- subset(corpus.df, freq.dif < minDiff) #
+equaldf <- subset(corpus.df, (freq.dif >= maxDiff & freq.dif <= #
+	minDiff)) #
+#
+rightText.spacing <- sapply(table(rightTextdf$freq.dif), function(x) optimal.spacing(x))#
+leftText.spacing <- sapply(table(leftTextdf$freq.dif), function(x) optimal.spacing(x))#
+equal.spacing <- sapply(table(equaldf$freq.dif), function(x) optimal.spacing(x))#
+rightText.optim <- rep(0, nrow(rightTextdf))#
+for (n in names(rightText.spacing)) {#
+	rightText.optim[which(rightTextdf$freq.dif == as.numeric(n))]<-rightText.spacing[[n]]#
+	}#
+rightTextdf <- transform(rightTextdf, Spacing = rightText.optim)#
+#
+leftText.optim <- rep(0, nrow(leftTextdf))#
+for (n in names(leftText.spacing)) {#
+	leftText.optim[which(leftTextdf$freq.dif == as.numeric(n))]<- leftText.spacing[[n]]#
+	}#
+leftTextdf <- transform(leftTextdf, Spacing = leftText.optim)#
+#
+equaldf$Spacing <- as.vector(equal.spacing)#
+}#
+#
+{#
+	labelEqu <- "Said Equally"#
+	labelPos <- "Republican"#
+	labelNeg <- "Democrat"#
+	labTitle <- paste("Debate Cloud:", labelNeg, "vs", labelPos, sep = " ")#
+}#
+#
+{#
+	jitterParm <- position_jitter(w = 0.1, h = 0.1)#
+	p1 <- ggplot(rightTextdf, aes(x = freq.dif, y = Spacing)) +  #
+		geom_text(position = jitterParm, aes(size = rightText, label = row.names(rightTextdf), colour = freq.dif)) + #
+		geom_text(data = leftTextdf, position = jitterParm, aes(x = freq.dif, y = Spacing, label = row.names(leftTextdf), size = leftText, color = freq.dif)) + #
+		geom_text(data = equaldf, aes(x = freq.dif, y = Spacing, label = row.names(equaldf), size = rightText, color = freq.dif)) + scale_size(range = c(3, 13), name = "word frequency") + #
+		scale_colour_gradient(low = "blue", high = "red", guide = "none") + #
+		scale_x_continuous(breaks = c(min(leftTextdf$freq.dif), 0, max(rightTextdf$freq.dif)), labels = c(labelNeg, labelEqu, labelPos)) + #
+		scale_y_continuous(breaks = c(0), expand=c(0,0.1),  labels = c("")) + #
+		xlab("") + ylab("") + labs(title = labTitle) + xlab("") + #
+		ylab("")#
+#
+	p1 + theme_bw()  #
+}

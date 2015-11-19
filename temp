@@ -1,5 +1,5 @@
-<<TermDocumentMatrix (terms: 4266, documents: 2)>>
-Non-/sparse entries: 5591/2941
+<<TermDocumentMatrix (terms: 4262, documents: 2)>>
+Non-/sparse entries: 5586/2938
 Sparsity           : 34%
 Maximal term length: 20
 Weighting          : term frequency (tf)
@@ -1426,8 +1426,7 @@ Terms                  character(0) character(0)
   evolved                         6            0
   exactly                        36            4
   examine                         4            0
-  example                        18            2
-  exampleapplause                 1            0
+  example                        19            2
   excellent                       0            1
   except                          7            3
   exception                       2            0
@@ -1745,8 +1744,7 @@ Terms                  character(0) character(0)
   governed                        2            0
   government                    209           16
   governments                     4            0
-  governor                      137            8
-  governors                       4            0
+  governors                       2            0
   grab                            2            0
   grace                           0            1
   grade                           2            0
@@ -2446,9 +2444,8 @@ Terms                  character(0) character(0)
   merge                           0            1
   merit                           1            0
   meritbased                      2            0
-  mess                            4            0
+  mess                            6            0
   message                         6            1
-  messapplause                    2            0
   messed                          4            0
   met                             2            3
   mexican                        11            0
@@ -3921,8 +3918,7 @@ Terms                  character(0) character(0)
   traditions                      0            2
   tragedies                       1            0
   tragedy                         1            0
-  tragic                          2            1
-  tragicapplause                  2            0
+  tragic                          4            1
   trail                           4            0
   train                           4            0
   training                        9            1
